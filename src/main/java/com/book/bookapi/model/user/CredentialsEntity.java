@@ -18,7 +18,15 @@ public class CredentialsEntity extends BaseEntity {
 
     private LocalDateTime creationDate;
 
+    public CredentialsEntity() {
+    }
 
+    public CredentialsEntity(String email, String password, UserRole role, LocalDateTime creationDate) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.creationDate = creationDate;
+    }
 
     public String getEmail() {
         return email;

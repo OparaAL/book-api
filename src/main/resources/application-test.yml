@@ -10,3 +10,14 @@ spring:
       ddl-auto: none
   flyway:
     enabled: true
+
+
+jwt:
+  secret:
+    access: "HGOYioniygOOMIiUJONh"
+    refresh: "FBHJFASFBhufhafshjfS"
+  expiration:
+    access: 10000
+    refresh: 1000000
+  header: "Authorization"
+  enable: true

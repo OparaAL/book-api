@@ -20,4 +20,16 @@ public class GlobalExceptionHandler {
     public ResponseException itemAlreadyExistsException(ItemAlreadyExistsException ex){
         return new ResponseException(ex.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(JwtAuthenticationException.class)
+    public ResponseException jwtAuthenticationException(JwtAuthenticationException ex){
+        return new ResponseException(ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RefreshTokenInvalidException.class)
+    public ResponseException refreshTokenInvalidException(RefreshTokenInvalidException ex){
+        return new ResponseException(ex.getMessage());
+    }
 }

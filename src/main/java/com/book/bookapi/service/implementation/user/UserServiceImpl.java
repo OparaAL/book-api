@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(SignUpDto signUpDto) {
         UserDto userDto = new UserDto();
         switch (signUpDto.getRole()){
-            case USER:
+            case READER:
                 userDto = createReader(signUpDto);
                 break;
         }
