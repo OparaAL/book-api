@@ -1,6 +1,6 @@
 package com.book.bookapi.dto.request;
 
-import com.book.bookapi.model.user.UserRole;
+import com.book.bookapi.model.user.credentials.UserRole;
 
 import java.util.List;
 

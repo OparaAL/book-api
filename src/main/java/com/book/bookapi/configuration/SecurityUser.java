@@ -1,6 +1,6 @@
 package com.book.bookapi.configuration;
 
-import com.book.bookapi.model.user.CredentialsEntity;
+import com.book.bookapi.model.user.credentials.CredentialsEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

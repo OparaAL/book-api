@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/secured/")
-@PreAuthorize("hasAuthority(T(com.book.bookapi.model.user.Permission).ADMIN.getPermission())")
+@PreAuthorize("hasAuthority(T(com.book.bookapi.model.user.credentials.Permission).ADMIN.getPermission())")
 public class AdminController {
 
     private final BookService bookService;

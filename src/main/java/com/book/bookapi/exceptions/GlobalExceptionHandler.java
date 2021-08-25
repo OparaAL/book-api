@@ -32,4 +32,10 @@ public class GlobalExceptionHandler {
     public ResponseException refreshTokenInvalidException(RefreshTokenInvalidException ex){
         return new ResponseException(ex.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(WrongUserException.class)
+    public ResponseException wrongUserException(WrongUserException ex){
+        return new ResponseException(ex.getMessage());
+    }
 }

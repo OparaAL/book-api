@@ -3,9 +3,8 @@ package com.book.bookapi.mapper.user;
 import com.book.bookapi.dto.request.SignUpDto;
 import com.book.bookapi.dto.user.ReaderDto;
 import com.book.bookapi.dto.user.UserDto;
-import com.book.bookapi.model.user.ReaderEntity;
+import com.book.bookapi.model.user.reader.ReaderEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ReaderMapper {

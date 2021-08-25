@@ -1,5 +1,6 @@
-package com.book.bookapi.model.user;
+package com.book.bookapi.model.user.credentials;
 
+import com.book.bookapi.model.user.credentials.Permission;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;

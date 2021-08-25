@@ -1,4 +1,4 @@
-package com.book.bookapi.model.user;
+package com.book.bookapi.model.user.credentials;
 
 
 public enum Permission {

@@ -3,7 +3,7 @@ package com.book.bookapi.service.implementation.user;
 import com.book.bookapi.dto.request.SignUpDto;
 import com.book.bookapi.mapper.user.CredentialsMapper;
 import com.book.bookapi.exceptions.ItemAlreadyExistsException;
-import com.book.bookapi.model.user.CredentialsEntity;
+import com.book.bookapi.model.user.credentials.CredentialsEntity;
 import com.book.bookapi.repository.user.CredentialsRepository;
 import com.book.bookapi.service.interfaces.user.CredentialsService;
 import org.springframework.security.crypto.password.PasswordEncoder;

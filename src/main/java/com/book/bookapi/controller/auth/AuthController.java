@@ -7,6 +7,7 @@ import com.book.bookapi.dto.request.TokenDto;
 import com.book.bookapi.dto.user.UserDto;
 import com.book.bookapi.service.interfaces.auth.AuthService;
 import com.book.bookapi.service.interfaces.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,15 +20,11 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth/")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final UserService userService;
     private final AuthService authService;
-
-    public AuthController(UserService userService, AuthService authService) {
-        this.userService = userService;
-        this.authService = authService;
-    }
 
     @PostMapping("sign-up")
     public ResponseEntity<UserDto> signUp(@Valid @RequestBody SignUpDto signUpDto){

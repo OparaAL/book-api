@@ -5,7 +5,7 @@ import com.book.bookapi.dto.request.LoginRequestDto;
 import com.book.bookapi.dto.request.TokenDto;
 import com.book.bookapi.exceptions.ItemNotFoundException;
 import com.book.bookapi.exceptions.JwtAuthenticationException;
-import com.book.bookapi.model.user.CredentialsEntity;
+import com.book.bookapi.model.user.credentials.CredentialsEntity;
 import com.book.bookapi.repository.user.CredentialsRepository;
 import com.book.bookapi.service.interfaces.auth.AuthService;
 import io.jsonwebtoken.Claims;

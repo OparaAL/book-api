@@ -1,8 +1,7 @@
 package com.book.bookapi.configuration;
 
 import com.book.bookapi.exceptions.ItemNotFoundException;
-import com.book.bookapi.model.user.CredentialsEntity;
-import com.book.bookapi.model.user.ReaderEntity;
+import com.book.bookapi.model.user.credentials.CredentialsEntity;
 import com.book.bookapi.repository.user.CredentialsRepository;
 import com.book.bookapi.repository.user.ReaderRepository;
 import org.springframework.security.core.userdetails.UserDetails;
