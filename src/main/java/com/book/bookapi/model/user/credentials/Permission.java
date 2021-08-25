@@ -1,6 +1,5 @@
 package com.book.bookapi.model.user.credentials;
 
-
 public enum Permission {
     USER("user"),
     ADMIN("admin");

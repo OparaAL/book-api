@@ -4,12 +4,14 @@ import com.book.bookapi.model.BaseEntity;
 import com.book.bookapi.model.user.credentials.CredentialsEntity;
 import com.book.bookapi.model.user.UserEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "admin_user")
 @Data
+@NoArgsConstructor
 public class AdminEntity extends BaseEntity {
 
 
