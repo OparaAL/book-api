@@ -61,18 +61,4 @@ public class SecurityUser implements UserDetails {
                 user.getRole().getAuthorities()
         );
     }
-
-    /*public static UserDetails fromReader(ReaderEntity user){
-        return new org.springframework.security.core.userdetails.User(
-                user.getCredentials().getEmail(), user.getCredentials().getPassword(),
-                user.getCredentials().getRole().getAuthorities()
-        );
-    }
-
-    public static UserDetails fromAdmin(AdminEntity user){
-        return new org.springframework.security.core.userdetails.User(
-                user.getCredentials().getEmail(), user.getCredentials().getPassword(),
-                user.getCredentials().getRole().getAuthorities()
-        );
-    }*/
 }

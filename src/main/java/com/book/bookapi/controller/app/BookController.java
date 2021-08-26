@@ -3,6 +3,7 @@ package com.book.bookapi.controller.app;
 import com.book.bookapi.dto.book.BookDto;
 import com.book.bookapi.dto.book.SearchBookDto;
 import com.book.bookapi.service.interfaces.book.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/book")
+@RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
-
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
 
     @GetMapping("/{bookId}")
     public ResponseEntity<BookDto> get(@PathVariable Long bookId){

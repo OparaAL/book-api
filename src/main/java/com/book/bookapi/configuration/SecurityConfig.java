@@ -3,6 +3,7 @@ package com.book.bookapi.configuration;
 
 import com.book.bookapi.configuration.jwt.JwtFilter;
 import com.book.bookapi.exceptions.CustomAuthenticationEntryPoint;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -23,13 +24,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@RequiredArgsConstructor
 @Profile("test")
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final JwtFilter jwtFilter;
-    public SecurityConfig(JwtFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -57,8 +56,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                     .anyRequest()
                     .authenticated()
                 .and()
+                    .oauth2Login()
+                .and()
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -82,4 +84,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
