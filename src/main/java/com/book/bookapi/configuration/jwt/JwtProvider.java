@@ -3,6 +3,7 @@ package com.book.bookapi.configuration.jwt;
 import com.book.bookapi.exceptions.JwtAuthenticationException;
 import com.book.bookapi.exceptions.RefreshTokenInvalidException;
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtProvider {
 
     private final UserDetailsService userDetailsService;
@@ -35,11 +37,6 @@ public class JwtProvider {
 
     @Value("${jwt.header}")
     private String authorizationHeader;
-
-
-    public JwtProvider(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
 
     @PostConstruct

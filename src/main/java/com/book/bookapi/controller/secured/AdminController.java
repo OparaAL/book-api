@@ -18,6 +18,11 @@ public class AdminController {
         this.bookService = bookService;
     }
 
+    @GetMapping("test")
+    public String test(){
+        return "Hello";
+    }
+
     @PostMapping("book")
     public ResponseEntity<BookDto> create(@RequestBody BookDto bookDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.create(bookDto));
