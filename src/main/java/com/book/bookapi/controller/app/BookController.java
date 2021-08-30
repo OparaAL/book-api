@@ -25,6 +25,11 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.get(bookId));
     }
 
+    @GetMapping("/hello")
+    public ResponseEntity<String> hello(){
+        return ResponseEntity.status(HttpStatus.OK).body("Hello");
+    }
+
     @GetMapping
     public ResponseEntity<List<BookDto>> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getAll());
