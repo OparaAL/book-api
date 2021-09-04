@@ -8,5 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface AuthService {
 
     TokenDto signIn(LoginRequestDto loginRequestDto);
+    TokenDto signInGoogle(HttpServletRequest httpServletRequest);
     TokenDto refreshToken(String refresh, HttpServletRequest request);
 }

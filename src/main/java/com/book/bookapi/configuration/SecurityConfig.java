@@ -2,13 +2,11 @@ package com.book.bookapi.configuration;
 
 
 import com.book.bookapi.configuration.jwt.JwtFilter;
-import com.book.bookapi.controller.auth.AuthController;
 import com.book.bookapi.exceptions.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,22 +14,18 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -68,26 +62,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                     .antMatchers("/auth/sign-up").permitAll()
                     .antMatchers("/auth/sign-in").permitAll()
                     .antMatchers("/auth/refresh").permitAll()
-                    .antMatchers("/book/hello").permitAll()
+                    .antMatchers("/auth/test").permitAll()
                     .anyRequest()
                     .authenticated()
                 .and()
                     .oauth2Login()
-                        .successHandler(new AuthenticationSuccessHandler() {
+                        .successHandler((httpServletRequest, httpServletResponse, authentication) -> {
 
-                            @Override
-                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                                                Authentication authentication) throws IOException, ServletException {
+                            OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) authentication;
+                            httpServletRequest.setAttribute("oauthToken", oauth2Token);
 
-                                OAuth2AuthenticationToken oauthToken =
-                                        (OAuth2AuthenticationToken) authentication;
-
-                                System.out.println(oauthToken.getAuthorizedClientRegistrationId());
-                                System.out.println(oauthToken.getPrincipal());
-                            }
+                            httpServletRequest
+                                    .getRequestDispatcher(String.format("/auth/login/oauth2/%s",oauth2Token.getAuthorizedClientRegistrationId()))
+                                    .forward(httpServletRequest, httpServletResponse);
                         });
 
-        //http.oauth2Login().defaultSuccessUrl("/book/hello")
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

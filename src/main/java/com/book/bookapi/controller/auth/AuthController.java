@@ -11,9 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,23 +23,19 @@ public class AuthController {
 
     private final UserService userService;
     private final AuthService authService;
-    private final OAuth2AuthorizedClientService authorizedClientService;
 
     @PostMapping("sign-up")
     public ResponseEntity<UserDto> signUp(@Valid @RequestBody SignUpDto signUpDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(signUpDto));
     }
 
-    @GetMapping("test")
-    public ResponseEntity<Void> test(OAuth2AuthenticationToken authentication){
-        OAuth2AuthorizedClient client = authorizedClientService
-                .loadAuthorizedClient(
-                        authentication.getAuthorizedClientRegistrationId(),
-                        authentication.getName());
-        System.out.println(client.getRefreshToken());
-        System.out.println(client.getAccessToken());
-        System.out.println(client.getClientRegistration());
-        System.out.println(client.getPrincipalName());
+    @GetMapping("login/oauth2/google")
+    public ResponseEntity<TokenDto> test(HttpServletRequest httpServletRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.signInGoogle(httpServletRequest));
+    }
+
+    @GetMapping("check")
+    public ResponseEntity<Void> check(Authentication authentication){
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

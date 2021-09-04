@@ -28,5 +28,4 @@ public class SignUpDto {
     @NotNull
     private UserRole role;
 
-
 }
