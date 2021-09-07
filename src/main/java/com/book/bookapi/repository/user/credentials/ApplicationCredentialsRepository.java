@@ -1,4 +1,4 @@
-package com.book.bookapi.repository.user;
+package com.book.bookapi.repository.user.credentials;
 
 import com.book.bookapi.model.user.credentials.ApplicationCredentialsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

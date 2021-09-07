@@ -4,6 +4,8 @@ package com.book.bookapi.model.user;
 import com.book.bookapi.model.AccountType;
 import com.book.bookapi.model.BaseEntity;
 import com.book.bookapi.model.user.credentials.ApplicationCredentialsEntity;
+import com.book.bookapi.model.user.credentials.FacebookCredentialsEntity;
+import com.book.bookapi.model.user.credentials.GithubCredentialsEntity;
 import com.book.bookapi.model.user.credentials.GoogleCredentialsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +31,12 @@ public class UserEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "user")
     private GoogleCredentialsEntity googleCredentials;
+
+    @OneToOne(mappedBy = "user")
+    private FacebookCredentialsEntity facebookCredentials;
+
+    @OneToOne(mappedBy = "user")
+    private GithubCredentialsEntity githubCredentials;
 
     @Enumerated(EnumType.STRING)
     private AccountType accountType;

@@ -9,5 +9,7 @@ public interface AuthService {
 
     TokenDto signIn(LoginRequestDto loginRequestDto);
     TokenDto signInGoogle(HttpServletRequest httpServletRequest);
+    TokenDto signInFacebook(HttpServletRequest httpServletRequest);
+    TokenDto signInGithub(HttpServletRequest httpServletRequest);
     TokenDto refreshToken(String refresh, HttpServletRequest request);
 }

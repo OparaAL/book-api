@@ -71,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
                             OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) authentication;
                             httpServletRequest.setAttribute("oauthToken", oauth2Token);
+                            httpServletRequest.setAttribute("auth", authentication);
 
                             httpServletRequest
                                     .getRequestDispatcher(String.format("/auth/login/oauth2/%s",oauth2Token.getAuthorizedClientRegistrationId()))

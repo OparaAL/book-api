@@ -11,14 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "google_account_credentials")
+@Table(name = "github_account_credentials")
 @Getter
 @Setter
-public class GoogleCredentialsEntity extends BaseCredentialsEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class GithubCredentialsEntity  extends BaseCredentialsEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id")

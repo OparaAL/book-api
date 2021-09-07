@@ -109,10 +109,6 @@ public class JwtProvider {
         }
     }
 
-    public Jws<Claims> getToken(String token){
-        return Jwts.parser().setSigningKey(accessSecretKey).parseClaimsJws(token);
-    }
-
     public Jws<Claims> getRefreshToken(String token){
         if(validateRefreshToken(token))
             return Jwts.parser().setSigningKey(refreshSecretKey).parseClaimsJws(token);

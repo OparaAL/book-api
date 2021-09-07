@@ -17,6 +17,12 @@ spring:
           google:
             client-id:
             client-secret:
+            github:
+              client-id:
+              client-secret:
+            facebook:
+              client-id:
+              client-secret:
 
 jwt:
   secret:

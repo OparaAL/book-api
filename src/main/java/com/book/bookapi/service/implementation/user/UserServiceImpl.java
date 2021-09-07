@@ -6,11 +6,9 @@ import com.book.bookapi.exceptions.WrongUserException;
 import com.book.bookapi.mapper.user.UserMapper;
 import com.book.bookapi.model.AccountType;
 import com.book.bookapi.model.user.UserEntity;
-import com.book.bookapi.model.user.credentials.ApplicationCredentialsEntity;
-import com.book.bookapi.model.user.credentials.GoogleCredentialsEntity;
-import com.book.bookapi.model.user.credentials.UserRole;
+import com.book.bookapi.model.user.credentials.*;
 import com.book.bookapi.model.user.reader.ReaderEntity;
-import com.book.bookapi.repository.user.GoogleCredentialsRepository;
+import com.book.bookapi.repository.user.credentials.GoogleCredentialsRepository;
 import com.book.bookapi.repository.user.ReaderRepository;
 import com.book.bookapi.repository.user.UserRepository;
 import com.book.bookapi.service.interfaces.user.CredentialsService;
@@ -21,6 +19,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -49,12 +50,19 @@ public class UserServiceImpl implements UserService {
 
         switch (AccountType.fromString(oAuth2Token.getAuthorizedClientRegistrationId())){
             case GOOGLE:
-                userDto = createGoogleUserWithGoogleCredentials(oAuth2Token, attributes);
+                userDto = createReaderWithGoogleCredentials(oAuth2Token, attributes);
+                break;
+            case FACEBOOK:
+                userDto = createReaderWithFacebookCredentials(oAuth2Token, attributes);
+                break;
+            case GITHUB:
+                userDto = createReaderWithGithubCredentials(oAuth2Token, attributes);
                 break;
             default: throw new WrongUserException("Cannot create OAuth2 user");
         }
         return userDto;
     }
+
 
     private UserDto createReaderWithApplicationCredentials(SignUpDto signUpDto){
 
@@ -74,7 +82,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.userToDto(user);
     }
 
-    private UserDto createGoogleUserWithGoogleCredentials(OAuth2AuthenticationToken oAuth2Token, Map<String, Object> attributes){
+    private UserDto createReaderWithGoogleCredentials(OAuth2AuthenticationToken oAuth2Token, Map<String, Object> attributes){
 
         GoogleCredentialsEntity credentials = credentialsService.createGoogleCredentials(oAuth2Token);
         UserEntity user = new UserEntity();
@@ -87,6 +95,7 @@ public class UserServiceImpl implements UserService {
         user.setAccountType(AccountType.GOOGLE);
         user.setGoogleCredentials(credentials);
 
+        credentials.setClientId(oAuth2Token.getName());
         credentials.setUser(user);
         credentials.setRole(UserRole.READER);
 
@@ -95,4 +104,56 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.userToDto(user);
     }
+
+    private UserDto createReaderWithFacebookCredentials(OAuth2AuthenticationToken oAuth2Token, Map<String, Object> attributes){
+
+        FacebookCredentialsEntity credentials = credentialsService.createFacebookCredentials(oAuth2Token);
+        UserEntity user = new UserEntity();
+
+        ReaderEntity reader = new ReaderEntity(user);
+
+        List<String> firstAndLastName = Arrays.asList(attributes.get("name").toString().split(" "));
+
+        user.setEmail(credentials.getEmail());
+        user.setFirstName(firstAndLastName.get(0));
+        user.setLastName(firstAndLastName.get(1));
+        user.setAccountType(AccountType.FACEBOOK);
+        user.setFacebookCredentials(credentials);
+
+        credentials.setClientId(oAuth2Token.getName());
+        credentials.setUser(user);
+        credentials.setRole(UserRole.READER);
+
+        userRepository.save(user);
+        readerRepository.save(reader);
+
+        return userMapper.userToDto(user);
+    }
+
+    private UserDto createReaderWithGithubCredentials(OAuth2AuthenticationToken oAuth2Token, Map<String, Object> attributes) {
+
+        GithubCredentialsEntity credentials = credentialsService.createGithubCredentials(oAuth2Token);
+        UserEntity user = new UserEntity();
+
+        ReaderEntity reader = new ReaderEntity(user);
+
+        List<String> firstAndLastName = new ArrayList<>();
+        if(attributes.get("name") != null) firstAndLastName = Arrays.asList(attributes.get("name").toString().split(" "));
+
+        user.setEmail(credentials.getEmail());
+        user.setFirstName(!firstAndLastName.isEmpty() ? firstAndLastName.get(0) : null);
+        user.setLastName(!firstAndLastName.isEmpty() ? firstAndLastName.get(1) : null);
+        user.setAccountType(AccountType.GITHUB);
+        user.setGithubCredentials(credentials);
+
+        credentials.setClientId(oAuth2Token.getName());
+        credentials.setUser(user);
+        credentials.setRole(UserRole.READER);
+
+        userRepository.save(user);
+        readerRepository.save(reader);
+
+        return userMapper.userToDto(user);
+    }
+
 }

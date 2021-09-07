@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +31,26 @@ public class AuthController {
     }
 
     @GetMapping("login/oauth2/google")
-    public ResponseEntity<TokenDto> test(HttpServletRequest httpServletRequest){
+    public ResponseEntity<TokenDto> loginGoogle(HttpServletRequest httpServletRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.signInGoogle(httpServletRequest));
     }
 
+    @GetMapping("login/oauth2/facebook")
+    public ResponseEntity<TokenDto> loginFacebook(HttpServletRequest httpServletRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.signInFacebook(httpServletRequest));
+    }
+
+    @GetMapping("login/oauth2/github")
+    public ResponseEntity<TokenDto> loginGithub(HttpServletRequest httpServletRequest){
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.signInGithub(httpServletRequest));
+    }
+
     @GetMapping("check")
-    public ResponseEntity<Void> check(Authentication authentication){
+    public ResponseEntity<Void> check(HttpServletRequest httpServletRequest, Authentication authenticationJWT){
+        OAuth2AuthenticationToken OAuth2token = (OAuth2AuthenticationToken) httpServletRequest.getAttribute("oauthToken");
+        Authentication authentication = (Authentication) httpServletRequest.getAttribute("auth");
+        System.out.println(OAuth2token.getPrincipal());
+        System.out.println(authentication.getPrincipal());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

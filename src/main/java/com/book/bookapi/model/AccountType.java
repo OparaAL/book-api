@@ -2,7 +2,9 @@ package com.book.bookapi.model;
 
 public enum AccountType {
     APPLICATION("application"),
-    GOOGLE("google");
+    GOOGLE("google"),
+    GITHUB("github"),
+    FACEBOOK("facebook");
 
 
     private String value;

@@ -6,7 +6,7 @@ import com.book.bookapi.model.user.admin.AdminEntity;
 import com.book.bookapi.model.user.credentials.ApplicationCredentialsEntity;
 import com.book.bookapi.model.user.credentials.UserRole;
 import com.book.bookapi.repository.user.AdminRepository;
-import com.book.bookapi.repository.user.ApplicationCredentialsRepository;
+import com.book.bookapi.repository.user.credentials.ApplicationCredentialsRepository;
 import com.book.bookapi.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;

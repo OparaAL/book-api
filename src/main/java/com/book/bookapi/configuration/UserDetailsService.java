@@ -4,8 +4,8 @@ import com.book.bookapi.exceptions.ItemNotFoundException;
 import com.book.bookapi.model.AccountType;
 import com.book.bookapi.model.user.credentials.ApplicationCredentialsEntity;
 import com.book.bookapi.model.user.credentials.GoogleCredentialsEntity;
-import com.book.bookapi.repository.user.ApplicationCredentialsRepository;
-import com.book.bookapi.repository.user.GoogleCredentialsRepository;
+import com.book.bookapi.repository.user.credentials.ApplicationCredentialsRepository;
+import com.book.bookapi.repository.user.credentials.GoogleCredentialsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,26 +27,38 @@ public class UserDetailsService implements org.springframework.security.core.use
         if(emailWithType.size() > 1){
             switch (AccountType.fromString(emailWithType.get(1))) {
                 case APPLICATION:
-                    return getApplicationUser(emailWithType.get(0));
+                    return getApplicationCustomUser(emailWithType.get(0));
                 case GOOGLE:
-                    return getGoogleUser(emailWithType.get(0));
+                    return getGoogleCustomUser(emailWithType.get(2));
                 default:
                     return null;
             }
         } else{
-            return getApplicationUser(s);
+            return getApplicationCustomUser(s);
         }
     }
 
-    private UserDetails getApplicationUser(String s){
+    /*private UserDetails getApplicationUser(String email){
         ApplicationCredentialsEntity credentials = applicationCredentialsRepository
-                .findByEmail(s).orElseThrow(() -> new ItemNotFoundException("Credentials not found"));
-        return SecurityUser.fromUser(credentials, AccountType.APPLICATION);
+                .findByEmail(email).orElseThrow(() -> new ItemNotFoundException("Credentials not found"));
+        return SecurityUser.fromUser(credentials, AccountType.APPLICATION, null);
     }
 
-    private UserDetails getGoogleUser(String s){
+    private UserDetails getGoogleUser(String clientId){
         GoogleCredentialsEntity credentials = googleCredentialsRepository
-                .findByEmail(s).orElseThrow(() -> new ItemNotFoundException("Credentials bot found"));
-        return SecurityUser.fromUser(credentials, AccountType.GOOGLE);
+                .findByClientId(clientId).orElseThrow(() -> new ItemNotFoundException("Credentials bot found"));
+        return SecurityUser.fromUser(credentials, AccountType.GOOGLE, clientId);
+    }*/
+
+    private UserDetails getApplicationCustomUser(String email){
+        ApplicationCredentialsEntity credentials = applicationCredentialsRepository
+                .findByEmail(email).orElseThrow(() -> new ItemNotFoundException("Credentials not found"));
+        return CustomUser.fromCustomUser(credentials, AccountType.APPLICATION, null);
+    }
+
+    private UserDetails getGoogleCustomUser(String clientId){
+        GoogleCredentialsEntity credentials = googleCredentialsRepository
+                .findByClientId(clientId).orElseThrow(() -> new ItemNotFoundException("Credentials bot found"));
+        return CustomUser.fromCustomUser(credentials, AccountType.GOOGLE, clientId);
     }
 }

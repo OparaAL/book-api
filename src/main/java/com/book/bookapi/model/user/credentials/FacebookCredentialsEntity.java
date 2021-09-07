@@ -13,12 +13,12 @@ import javax.persistence.Table;
 
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "google_account_credentials")
+@Table(name = "facebook_account_credentials")
 @Getter
 @Setter
-public class GoogleCredentialsEntity extends BaseCredentialsEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class FacebookCredentialsEntity  extends BaseCredentialsEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id")
