@@ -1,5 +1,6 @@
 package com.book.bookapi.dto.request;
 
+import com.book.bookapi.model.AccountType;
 import com.book.bookapi.model.user.credentials.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +16,5 @@ public class TokenDto {
     private String token;
     private List<UserRole> userRoles;
     private String refreshToken;
+    private AccountType accountType;
 }

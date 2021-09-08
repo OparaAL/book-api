@@ -16,16 +16,10 @@ import java.time.LocalDateTime;
 @Table(name = "application_account_credentials")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationCredentialsEntity extends BaseCredentialsEntity {
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
     public ApplicationCredentialsEntity(String email, String password, UserRole role, LocalDateTime creationDate, UserEntity user){
-        super(email, password, role, creationDate);
-        this.user = user;
+        super(email, password, role, creationDate, user);
     }
 }

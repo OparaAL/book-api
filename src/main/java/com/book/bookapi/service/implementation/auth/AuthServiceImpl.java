@@ -5,7 +5,6 @@ import com.book.bookapi.dto.request.LoginRequestDto;
 import com.book.bookapi.dto.request.TokenDto;
 import com.book.bookapi.exceptions.ItemNotFoundException;
 import com.book.bookapi.exceptions.JwtAuthenticationException;
-import com.book.bookapi.exceptions.WrongUserException;
 import com.book.bookapi.model.AccountType;
 import com.book.bookapi.model.user.credentials.*;
 import com.book.bookapi.repository.user.credentials.ApplicationCredentialsRepository;
@@ -81,7 +80,7 @@ public class AuthServiceImpl implements AuthService {
         String updatedToken = jwtProvider.createToken(credentials.getEmail(), credentials.getRole().name());
         String updatedRefresh = jwtProvider.createRefreshToken(credentials.getEmail(), credentials.getRole().name());
 
-        return new TokenDto(credentials.getEmail(), updatedToken, List.of(credentials.getRole()), updatedRefresh);
+        return new TokenDto(credentials.getEmail(), updatedToken, List.of(credentials.getRole()), updatedRefresh, credentials.getUser().getAccountType());
     }
 
     private BaseCredentialsEntity getCredentials(String email){
@@ -158,6 +157,6 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = jwtProvider
                 .createRefreshToken(String.format("%s|%s|%s", credentials.getEmail(), accountType, OAuth2token != null ? OAuth2token.getName() : null),
                         credentials.getRole().name());
-        return new TokenDto(credentials.getEmail(), token, List.of(credentials.getRole()), refreshToken);
+        return new TokenDto(credentials.getEmail(), token, List.of(credentials.getRole()), refreshToken, credentials.getUser().getAccountType());
     }
 }

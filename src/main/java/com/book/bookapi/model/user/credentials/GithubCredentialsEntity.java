@@ -19,10 +19,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class GithubCredentialsEntity  extends BaseCredentialsEntity {
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
     private String clientId;
 
 }

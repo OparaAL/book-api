@@ -1,5 +1,6 @@
 package com.book.bookapi.model.user.credentials;
 
+import com.book.bookapi.model.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,10 +30,15 @@ public abstract class BaseCredentialsEntity {
 
     protected LocalDateTime creationDate;
 
-    public BaseCredentialsEntity(String email, String password, UserRole role, LocalDateTime creationDate) {
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    public BaseCredentialsEntity(String email, String password, UserRole role, LocalDateTime creationDate, UserEntity user) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.creationDate = creationDate;
+        this.user = user;
     }
 }

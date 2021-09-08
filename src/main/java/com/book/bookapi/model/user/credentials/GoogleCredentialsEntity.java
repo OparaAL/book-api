@@ -20,10 +20,6 @@ import javax.persistence.Table;
 @Setter
 public class GoogleCredentialsEntity extends BaseCredentialsEntity {
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
     private String clientId;
 
 }
